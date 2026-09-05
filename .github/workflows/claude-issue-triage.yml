@@ -53,5 +53,7 @@ jobs:
           prompt: |
             Sigue al pie de la letra las instrucciones de `.github/issue-triage-prompt.md`
             para el issue #${{ github.event.issue.number }} del repositorio ${{ github.repository }}.
+            Cualquier comentario que publiques debe usar un formato markdown que GitHub
+            pueda interpretar y renderizar correctamente (sintaxis estándar de GitHub Flavored Markdown).
           claude_args: |
             --allowedTools "Read,Grep,Glob,Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*),Bash(gh api:*)"
