@@ -40,6 +40,10 @@ Three files, no modules/bundler — `game.js` is loaded directly via `<script sr
 
 Single `keydown` listener switches on `e.code`; movement/rotation/drop are ignored while `paused` or `gameOver` (except `KeyP`, which always toggles pause). `togglePause()` and `endGame()` both drive the same `#overlay` element, distinguished by `overlayTitle`/`overlayScore` text.
 
+### Theming
+
+Dark is the default. All colors in `style.css` are CSS variables on `:root` (dark), overridden by `[data-theme="light"]` on `<html>`. `#theme-toggle` (in `index.html`) flips the attribute via `applyTheme()` at the bottom of `game.js`, persists the choice in `localStorage` (`theme`), and calls `blur()` so `Space` doesn't re-trigger the button. The canvas grid color is read from `--grid-color` into `gridColor` (canvas can't use CSS vars directly); the canvas background comes from CSS. New colors should be added as variables in both themes.
+
 ### Tunable constants (top of `game.js`)
 
 `COLS`, `ROWS`, `BLOCK`, `COLORS`, `PIECES`, `LINE_SCORES`, initial `dropInterval`. If `COLS`/`ROWS`/`BLOCK` change, update the `#board` canvas `width`/`height` in `index.html` to match (`COLS×BLOCK` by `ROWS×BLOCK`).
