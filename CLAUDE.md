@@ -28,8 +28,8 @@ Three files, no modules/bundler — `game.js` is loaded directly via `<script sr
 
 ### Core model
 
-- **Board**: `ROWS × COLS` matrix (`createBoard`), each cell is `0` (empty) or a color index `1–7` identifying which piece locked there.
-- **Pieces**: `PIECES` array of square matrices (index 0 unused/null so piece type IDs 1–7 index directly into `PIECES`/`COLORS`). Rotation (`rotateCW`) is a matrix transpose + reverse, not precomputed rotation states.
+- **Board**: `ROWS × COLS` matrix (`createBoard`), each cell is `0` (empty) or a color index `1–8` identifying which piece locked there.
+- **Pieces**: `PIECES` array of square matrices (index 0 unused/null so piece type IDs 1–8 index directly into `PIECES`/`COLORS`; ID 8 is the 3×3 "tuerca" ring with an empty center). `randomPiece` picks uniformly from `PIECES.length - 1` types. Rotation (`rotateCW`) is a matrix transpose + reverse, not precomputed rotation states.
 - **Collision** (`collide`): bounds + board-cell overlap check, used for movement, rotation, and ghost-piece projection.
 - **Wall kicks** (`tryRotate`): after rotating, tries offsets `[0, -1, 1, -2, 2]` columns until one doesn't collide.
 - **Lock → clear → spawn pipeline**: `lockPiece()` calls `merge()` (bake current piece into `board`) → `clearLines()` (bottom-up full-row sweep, splice + unshift empty row at top) → `spawn()` (promote `next` to `current`, generate new `next`, check spawn collision → `endGame()`).
