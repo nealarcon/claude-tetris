@@ -16,6 +16,8 @@
   --overlay-bg: rgba(10, 10, 20, 0.75);
   --danger: #e57373;
   --shadow: rgba(0, 0, 0, 0.6);
+  --record-highlight: rgba(255, 213, 79, 0.25);
+  --record-accent: #ffd54f;
   color-scheme: dark;
 }
 
@@ -36,6 +38,8 @@
   --overlay-bg: rgba(238, 240, 246, 0.8);
   --danger: #c0392b;
   --shadow: rgba(40, 50, 90, 0.2);
+  --record-highlight: rgba(230, 160, 0, 0.25);
+  --record-accent: #b36b00;
   color-scheme: light;
 }
 
@@ -218,4 +222,65 @@ kbd {
 
 #restart-btn:hover {
   background: var(--accent-hover);
+}
+
+/* ---- Records / pantalla de inicio ---- */
+.start-screen { z-index: 2; }
+.start-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 8px;
+  color: var(--accent);
+}
+.records { width: 220px; }
+.records-list { list-style: none; counter-reset: rec; }
+.records-list li {
+  counter-increment: rec;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 8px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  border-radius: 4px;
+}
+.records-list li::before { content: counter(rec) "."; color: var(--label); width: 18px; text-align: left; }
+.records-list .rec-name { flex: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.records-list .rec-score { color: var(--accent); }
+.records-list li.highlight { background: var(--record-highlight); font-weight: 700; }
+.records-empty, .records-stats { font-size: 12px; color: var(--muted); }
+.new-record { font-size: 18px; font-weight: 800; color: var(--record-accent); letter-spacing: 2px; }
+.record-entry { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.record-entry.hidden { display: none; }
+.record-form { display: flex; gap: 6px; }
+#player-name {
+  width: 130px;
+  padding: 6px 8px;
+  background: var(--board-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  user-select: text;
+}
+#player-name:focus { outline: none; border-color: var(--accent); }
+#save-record-btn, #play-btn {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+#save-record-btn:hover, #play-btn:hover { background: var(--accent-hover); }
+.secondary-btn {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 12px;
+  cursor: pointer;
 }

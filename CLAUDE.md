@@ -36,6 +36,10 @@ Three files, no modules/bundler — `game.js` is loaded directly via `<script sr
 - **Game loop** (`loop`, driven by `requestAnimationFrame`): accumulates delta time in `dropAccum`; once it exceeds `dropInterval`, advances the piece one row or locks it. `draw()` runs every frame regardless (grid → locked board → ghost piece at `globalAlpha=0.2` → current piece).
 - **Scoring/leveling**: `LINE_SCORES` table `[0,100,300,500,800]` × `level`; hard drop is 2 pts/row, soft drop 1 pt/row. Level = `floor(lines/10)+1`; `dropInterval = max(100, 1000 - (level-1)*90)`.
 
+### Records and start screen
+
+`// ---- Records ----` section in `game.js`: `loadRecords()/saveRecords()` use `localStorage('tetrisRecords')` = `{ top: [{name, score, lines, level, date}], bestCombo, maxLines }` (top 5). The game no longer auto-starts: `#start-screen` is shown on load (top-5 table, best combo, max lines, "Borrar récords" with `confirm()`), and "Jugar"/Enter calls `init()` (`started` flag gates the keydown handler). `lockPiece()` tracks `combo` (consecutive locks clearing lines) and `maxComboThisGame`. `endGame()` calls `showGameOverRecords()`, which updates stats and, if the score qualifies, shows `#record-entry` (name input, maxlength 12, last name in `localStorage('playerName')`); tables are rendered via `textContent` with the new row highlighted. The keydown handler ignores events whose target is an `INPUT`.
+
 ### Input
 
 Single `keydown` listener switches on `e.code`; movement/rotation/drop are ignored while `paused` or `gameOver` (except `KeyP`, which always toggles pause). `togglePause()` and `endGame()` both drive the same `#overlay` element, distinguished by `overlayTitle`/`overlayScore` text.
