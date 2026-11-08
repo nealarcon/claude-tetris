@@ -88,6 +88,23 @@ body {
   border-color: var(--accent);
 }
 
+#skin-select {
+  position: absolute;
+  top: 0;
+  right: 48px;
+  background: var(--board-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#skin-select:hover {
+  border-color: var(--accent);
+}
+
 .game-container {
   display: flex;
   gap: 20px;

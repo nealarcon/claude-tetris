@@ -44,6 +44,10 @@ Single `keydown` listener switches on `e.code`; movement/rotation/drop are ignor
 
 Dark is the default. All colors in `style.css` are CSS variables on `:root` (dark), overridden by `[data-theme="light"]` on `<html>`. `#theme-toggle` (in `index.html`) flips the attribute via `applyTheme()` at the bottom of `game.js`, persists the choice in `localStorage` (`theme`), and calls `blur()` so `Space` doesn't re-trigger the button. The canvas grid color is read from `--grid-color` into `gridColor` (canvas can't use CSS vars directly); the canvas background comes from CSS. New colors should be added as variables in both themes.
 
+### Skins
+
+`SKINS` (section `// ---- Skins ----` in `game.js`) holds `retro` (default, original look), `neon`, `pastel`, `pixel`. Each skin is `{ colors, boardBg, gridColor, drawBlock(context, px, py, size, color, alpha) }`. The global `drawBlock(context, x, y, colorIndex, size, alpha)` wraps `currentSkin.drawBlock` in `save()/restore()` so `shadowBlur`/`globalAlpha` never leak. `boardBg`/`gridColor` of `null` fall back to the theme CSS vars (`themeGridColor` tracks the theme value so `applyTheme` and `applySkin` stay consistent). `<select id="skin-select">` calls `applySkin(name)`, which persists `localStorage('skin')` and redraws immediately.
+
 ### Tunable constants (top of `game.js`)
 
 `COLS`, `ROWS`, `BLOCK`, `COLORS`, `PIECES`, `LINE_SCORES`, initial `dropInterval`. If `COLS`/`ROWS`/`BLOCK` change, update the `#board` canvas `width`/`height` in `index.html` to match (`COLS×BLOCK` by `ROWS×BLOCK`).
