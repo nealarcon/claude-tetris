@@ -38,7 +38,11 @@ Three files, no modules/bundler — `game.js` is loaded directly via `<script sr
 
 ### Input
 
-Single `keydown` listener switches on `e.code`; movement/rotation/drop are ignored while `paused` or `gameOver` (except `KeyP`, which always toggles pause). `togglePause()` and `endGame()` both drive the same `#overlay` element, distinguished by `overlayTitle`/`overlayScore` text.
+Single `keydown` listener switches on `e.code`; movement/rotation/drop are ignored while `paused` or `gameOver` (except `KeyP`/`Escape`, which always toggle pause via `handlePauseMenuKey()`). `togglePause()` drives `#pause-menu`; `endGame()` drives `#overlay`.
+
+### Pause menu
+
+`P`/`Escape` toggle `togglePause()`, which shows the separate `#pause-menu` overlay (the `#overlay` element is now game-over only). Buttons: Reanudar, Reiniciar (calls `init()`, no page reload), Ver controles (toggles a key list), and a Nivel inicial `<select>` (1–10) stored in `startLevel` and persisted in `localStorage('startLevel')`. `init()` starts at `level = startLevel` and `clearLines()` levels with `max(startLevel, floor(lines/10)+1)`. While paused, `handlePauseMenuKey()` swallows all game keys (Arrow Up/Down move focus between menu items); on resume `lastTime`/`dropAccum` are reset and game keys are ignored for 150 ms (`inputBlockedUntil`). Menu buttons `blur()` after click so `Space` doesn't re-trigger them. Code lives in the "Menú de pausa" section at the end of `game.js`.
 
 ### Theming
 
